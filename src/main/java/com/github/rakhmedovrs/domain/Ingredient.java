@@ -13,12 +13,10 @@ public class Ingredient
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	private String description;
 	private BigDecimal amount;
-	// TODO SBT-RakhmedovRS: 18-May-20 add uom
-	//private UnitOfMeasure uom;
-
+	@OneToOne
+	private UnitOfMeasure uom;
 	@ManyToOne(targetEntity = Recipe.class)
 	private Recipe recipe;
 
@@ -50,6 +48,16 @@ public class Ingredient
 	public void setAmount(BigDecimal amount)
 	{
 		this.amount = amount;
+	}
+
+	public UnitOfMeasure getUom()
+	{
+		return uom;
+	}
+
+	public void setUom(UnitOfMeasure uom)
+	{
+		this.uom = uom;
 	}
 
 	public Recipe getRecipe()
