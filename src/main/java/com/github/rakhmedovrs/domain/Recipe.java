@@ -1,5 +1,6 @@
 package com.github.rakhmedovrs.domain;
 
+import java.util.Set;
 import javax.persistence.*;
 
 /**
@@ -22,6 +23,8 @@ public class Recipe
 	private String directions;
 	// TODO SBT-RakhmedovRS: 18-May-20 add difficulty
 	//private Difficulty difficulty;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
+	private Set<Ingredient> ingredients;
 
 	@Lob
 	private Byte[] image;
