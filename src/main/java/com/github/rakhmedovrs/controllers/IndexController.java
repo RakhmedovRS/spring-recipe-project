@@ -1,14 +1,10 @@
 package com.github.rakhmedovrs.controllers;
 
-import com.github.rakhmedovrs.domain.Category;
-import com.github.rakhmedovrs.domain.UnitOfMeasure;
-import com.github.rakhmedovrs.repositories.CategoryRepository;
-import com.github.rakhmedovrs.repositories.UnitOfMeasureRepository;
+import com.github.rakhmedovrs.services.RecipeService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.Optional;
 
 /**
  * @author RakhmedovRS
@@ -17,22 +13,17 @@ import java.util.Optional;
 @Controller
 public class IndexController
 {
-	private CategoryRepository categoryRepository;
-	private UnitOfMeasureRepository unitOfMeasureRepository;
+	private final RecipeService recipeService;
 
-	public IndexController(CategoryRepository categoryRepository, UnitOfMeasureRepository unitOfMeasureRepository)
+	public IndexController(RecipeService recipeService)
 	{
-		this.categoryRepository = categoryRepository;
-		this.unitOfMeasureRepository = unitOfMeasureRepository;
+		this.recipeService = recipeService;
 	}
 
 	@RequestMapping(path = {"", "/", "/index"}, method = RequestMethod.GET)
-	public String getIndexPage()
+	public String getIndexPage(Model model)
 	{
-		Optional<Category> categoryOptional = categoryRepository.findByDescription("American");
-		Optional<UnitOfMeasure> unitOfMeasureOptional = unitOfMeasureRepository.findByDescription("Tablespoon");
-		System.out.println("Category id is:" + categoryOptional.get().getId());
-		System.out.println("UnitOfMeasure id is:" + unitOfMeasureOptional.get().getId());
+		model.addAttribute("recipes", recipeService.getRecipes());
 		return "index";
 	}
 }
