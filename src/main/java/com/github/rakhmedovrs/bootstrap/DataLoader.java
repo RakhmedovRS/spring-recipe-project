@@ -33,13 +33,12 @@ public class DataLoader implements CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception
 	{
-
 		Category mexican = categoryRepository.findByDescription("Mexican").get();
 
 		Recipe guacamole = new Recipe();
 		guacamole.setCategories(new HashSet<>(Arrays.asList(mexican)));
 		guacamole.setDifficulty(Difficulty.EASY);
-		guacamole.setIngredients(new HashSet<>(createIngredients(guacamole)));
+		guacamole.setIngredients(new HashSet<>(createIngredients()));
 		guacamole.setPrepTime(10);
 		guacamole.setCookTime(0);
 		guacamole.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
@@ -55,25 +54,24 @@ public class DataLoader implements CommandLineRunner
 		);
 
 		Notes notes = new Notes();
-		notes.setRecipe(guacamole);
 		notes.setRecipeNotes("Once you have basic guacamole down, feel free to experiment with variations including strawberries, peaches, pineapple, mangoes, even watermelon. One classic Mexican guacamole has pomegranate seeds and chunks of peaches in it (a Diana Kennedy favorite). You can get creative with homemade guacamole!");
 		guacamole.setNotes(notes);
 
 		recipeRepository.save(guacamole);
 	}
 
-	private List<Ingredient> createIngredients(Recipe recipe)
+	private List<Ingredient> createIngredients()
 	{
-		Ingredient avocados = createIngredient(new BigDecimal(2), "ripe avocado", "Quantity", recipe);
-		Ingredient salt = createIngredient(new BigDecimal(0.25D), "salt", "Teaspoon", recipe);
-		Ingredient lime = createIngredient(new BigDecimal(1), "fresh lime juice", "Tablespoon", recipe);
-		Ingredient redOnion = createIngredient(new BigDecimal(2), "red onion", "Tablespoon", recipe);
-		Ingredient serranoChilies = createIngredient(new BigDecimal(1), "serrano chiles", "Quantity", recipe);
-		Ingredient cilantro = createIngredient(new BigDecimal(2), "cilantro", "Tablespoon", recipe);
-		Ingredient blackPepper = createIngredient(new BigDecimal(1), "black pepper", "Dash", recipe);
-		Ingredient tomatoes = createIngredient(new BigDecimal(0.5D), "ripe tomato", "Quantity", recipe);
-		Ingredient redRadishes = createIngredient(new BigDecimal(3), "red radishes", "Quantity", recipe);
-		Ingredient tortilla = createIngredient(new BigDecimal(3), "tortilla chips", "Quantity", recipe);
+		Ingredient avocados = createIngredient(new BigDecimal(2), "ripe avocado", "Quantity");
+		Ingredient salt = createIngredient(new BigDecimal(0.25D), "salt", "Teaspoon");
+		Ingredient lime = createIngredient(new BigDecimal(1), "fresh lime juice", "Tablespoon");
+		Ingredient redOnion = createIngredient(new BigDecimal(2), "red onion", "Tablespoon");
+		Ingredient serranoChilies = createIngredient(new BigDecimal(1), "serrano chiles", "Quantity");
+		Ingredient cilantro = createIngredient(new BigDecimal(2), "cilantro", "Tablespoon");
+		Ingredient blackPepper = createIngredient(new BigDecimal(1), "black pepper", "Dash");
+		Ingredient tomatoes = createIngredient(new BigDecimal(0.5D), "ripe tomato", "Quantity");
+		Ingredient redRadishes = createIngredient(new BigDecimal(3), "red radishes", "Quantity");
+		Ingredient tortilla = createIngredient(new BigDecimal(3), "tortilla chips", "Quantity");
 		return Arrays.asList(
 			avocados,
 			salt,
@@ -88,12 +86,12 @@ public class DataLoader implements CommandLineRunner
 		);
 	}
 
-	private Ingredient createIngredient(BigDecimal quantity, String description, String unitOfMeasure, Recipe recipe)
+	private Ingredient createIngredient(BigDecimal quantity, String description, String unitOfMeasure)
 	{
 		return new Ingredient(
 			description,
 			quantity,
-			unitOfMeasureRepository.findByDescription(unitOfMeasure).orElseThrow(() -> new RuntimeException("Cannot find " + unitOfMeasure)),
-			recipe);
+			unitOfMeasureRepository.findByDescription(unitOfMeasure).orElseThrow(() -> new RuntimeException("Cannot find " + unitOfMeasure))
+			);
 	}
 }
