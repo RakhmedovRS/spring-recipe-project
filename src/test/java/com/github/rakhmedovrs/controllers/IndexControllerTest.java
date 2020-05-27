@@ -4,12 +4,14 @@ import com.github.rakhmedovrs.domain.Recipe;
 import com.github.rakhmedovrs.services.RecipeService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -37,9 +39,20 @@ public class IndexControllerTest
 	@Test
 	public void getIndexPage()
 	{
-		when(recipeService.getRecipes()).thenReturn(new HashSet<>(Arrays.asList(new Recipe(), new Recipe())));
+		Recipe recipe1 = new Recipe();
+		recipe1.setDescription("recipe1");
+
+		Recipe recipe2 = new Recipe();
+		recipe1.setDescription("recipe2");
+
+		Set<Recipe> recipeSet = new HashSet<>(Arrays.asList(recipe1, recipe2));
+
+		ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
+
+		when(recipeService.getRecipes()).thenReturn(recipeSet);
 		assertEquals("index", indexController.getIndexPage(model));
 		verify(recipeService, times(1)).getRecipes();
-		verify(model, times(1)).addAttribute(eq("recipes"), anySet());
+		verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
+		assertEquals(2, argumentCaptor.getValue().size());
 	}
 }
