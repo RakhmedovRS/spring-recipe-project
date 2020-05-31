@@ -56,6 +56,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent>
 		guacamole.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
 		guacamole.setDescription("Perfect Guacamole");
 		guacamole.setServings(4);
+		guacamole.setSource("Simply Recipe");
 		guacamole.setDirections("1 Cut the avocado, remove flesh: Cut the avocados in half. Remove the pit. Score the inside of the avocado with a blunt knife and scoop out the flesh with a spoon. (See How to Cut and Peel an Avocado.) Place in a bowl.\n" +
 			"2 Mash with a fork: Using a fork, roughly mash the avocado. (Don't overdo it! The guacamole should be a little chunky.)\n" +
 			"3 Add salt, lime juice, and the rest: Sprinkle with salt and lime (or lemon) juice. The acid in the lime juice will provide some balance to the richness of the avocado and will help delay the avocados from turning brown.\n" +
