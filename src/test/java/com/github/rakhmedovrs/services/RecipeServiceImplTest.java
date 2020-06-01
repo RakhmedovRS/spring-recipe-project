@@ -1,5 +1,6 @@
 package com.github.rakhmedovrs.services;
 
+import com.github.rakhmedovrs.commands.RecipeCommand;
 import com.github.rakhmedovrs.converters.RecipeCommandToRecipe;
 import com.github.rakhmedovrs.converters.RecipeToRecipeCommand;
 import com.github.rakhmedovrs.domain.Recipe;
@@ -62,5 +63,25 @@ public class RecipeServiceImplTest
 		when(recipeRepository.findAll()).thenReturn(new HashSet<>(Collections.singleton(new Recipe())));
 		assertEquals(1, recipeService.getRecipes().size());
 		verify(recipeRepository, times(1)).findAll();
+	}
+
+	@Test
+	public void getRecipeCommandByIdTest() throws Exception {
+		Recipe recipe = new Recipe();
+		recipe.setId(1L);
+		Optional<Recipe> recipeOptional = Optional.of(recipe);
+
+		when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+		RecipeCommand recipeCommand = new RecipeCommand();
+		recipeCommand.setId(1L);
+
+		when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
+
+		RecipeCommand commandById = recipeService.findCommandById(1L);
+
+		assertNotNull("Null recipe returned", commandById);
+		verify(recipeRepository, times(1)).findById(anyLong());
+		verify(recipeRepository, never()).findAll();
 	}
 }

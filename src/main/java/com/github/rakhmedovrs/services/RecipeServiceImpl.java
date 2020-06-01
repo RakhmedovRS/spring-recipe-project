@@ -48,6 +48,13 @@ public class RecipeServiceImpl implements RecipeService
 
 	@Override
 	@Transactional
+	public RecipeCommand findCommandById(Long id)
+	{
+		return recipeToRecipeCommand.convert(recipeRepository.findById(id).orElseThrow(() -> new RuntimeException("Can't find a recipe with id:" + id)));
+	}
+
+	@Override
+	@Transactional
 	public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand)
 	{
 		Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);

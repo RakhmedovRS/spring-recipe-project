@@ -96,7 +96,7 @@
 									<li  th:each="ingredient : ${recipe.getIngredients()}"
 									     th:text="${(ingredient.getAmount())
 									     + ' '
-									     + (ingredient.getUom())
+									     + (ingredient.getUom().getDescription())
 									     + ' - '
 									     + (ingredient.getDescription())}">1 Teaspoon of Sugar</li>
 								</ul>
