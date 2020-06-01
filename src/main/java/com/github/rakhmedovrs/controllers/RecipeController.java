@@ -2,6 +2,7 @@ package com.github.rakhmedovrs.controllers;
 
 import com.github.rakhmedovrs.commands.RecipeCommand;
 import com.github.rakhmedovrs.services.RecipeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author RakhmedovRS
  * @created 31-May-20
  */
+@Slf4j
 @Controller
 public class RecipeController
 {
@@ -50,5 +52,14 @@ public class RecipeController
 	{
 		RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
 		return "redirect:/recipe/" + savedCommand.getId() + "/show";
+	}
+
+	@RequestMapping("recipe/{id}/delete")
+	public String deleteRecipe(@PathVariable String id)
+	{
+		log.debug("Delete recipe with id: " + id);
+
+		recipeService.deleteById(Long.valueOf(id));
+		return "redirect:/";
 	}
 }
