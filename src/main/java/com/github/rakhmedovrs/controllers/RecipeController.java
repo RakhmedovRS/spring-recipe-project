@@ -1,9 +1,12 @@
 package com.github.rakhmedovrs.controllers;
 
+import com.github.rakhmedovrs.commands.RecipeCommand;
 import com.github.rakhmedovrs.services.RecipeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -25,5 +28,20 @@ public class RecipeController
 	{
 		model.addAttribute("recipe", recipeService.findById(Long.parseLong(id)));
 		return "recipe/show";
+	}
+
+	@RequestMapping("recipe/new")
+	public String newRecipe(Model model)
+	{
+		model.addAttribute("recipe", new RecipeCommand());
+		return "recipe/recipeform";
+	}
+
+	@PostMapping
+	@RequestMapping("recipe")
+	public String saveOrUpdate(@ModelAttribute RecipeCommand recipeCommand)
+	{
+		RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
+		return "redirect:/recipe/show/" + savedCommand.getId();
 	}
 }
