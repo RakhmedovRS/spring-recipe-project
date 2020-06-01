@@ -1,5 +1,6 @@
 package com.github.rakhmedovrs.services;
 
+import com.github.rakhmedovrs.commands.RecipeCommand;
 import com.github.rakhmedovrs.domain.Recipe;
 
 import java.util.Set;
@@ -13,4 +14,6 @@ public interface RecipeService
 	Recipe findById(Long id);
 
 	Set<Recipe> getRecipes();
+
+	RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand);
 }

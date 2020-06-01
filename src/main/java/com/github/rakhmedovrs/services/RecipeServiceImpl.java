@@ -1,5 +1,8 @@
 package com.github.rakhmedovrs.services;
 
+import com.github.rakhmedovrs.commands.RecipeCommand;
+import com.github.rakhmedovrs.converters.RecipeCommandToRecipe;
+import com.github.rakhmedovrs.converters.RecipeToRecipeCommand;
 import com.github.rakhmedovrs.domain.Recipe;
 import com.github.rakhmedovrs.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.transaction.Transactional;
 
 /**
  * @author RakhmedovRS
@@ -17,10 +21,14 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService
 {
 	private final RecipeRepository recipeRepository;
+	private final RecipeCommandToRecipe recipeCommandToRecipe;
+	private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-	public RecipeServiceImpl(RecipeRepository recipeRepository)
+	public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe, RecipeToRecipeCommand recipeToRecipeCommand)
 	{
 		this.recipeRepository = recipeRepository;
+		this.recipeCommandToRecipe = recipeCommandToRecipe;
+		this.recipeToRecipeCommand = recipeToRecipeCommand;
 	}
 
 	@Override
@@ -36,5 +44,15 @@ public class RecipeServiceImpl implements RecipeService
 		Set<Recipe> recipeSet = new HashSet<>();
 		recipeRepository.findAll().forEach(recipeSet::add);
 		return recipeSet;
+	}
+
+	@Override
+	@Transactional
+	public RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand)
+	{
+		Recipe detachedRecipe = recipeCommandToRecipe.convert(recipeCommand);
+		Recipe savedRecipe = recipeRepository.save(detachedRecipe);
+		log.debug("Saved RecipeID: " + savedRecipe.getId());
+		return recipeToRecipeCommand.convert(savedRecipe);
 	}
 }
