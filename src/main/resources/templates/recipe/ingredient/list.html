@@ -56,7 +56,7 @@
 							</tr>
 							<tr th:each="ingredient : ${recipe.getIngredients()}">
 								<td th:text="${ingredient.getId()}">334</td>
-								<td th:text="${ingredient.getAmount()} + ' ' + ${ingredient.uom.getDescription()} + ' ' + ${ingredient.getDescription()} + '/show'">Tasty Goodnees 3</td>
+								<td th:text="${ingredient.getAmount()} + ' ' + ${ingredient.uom.getDescription()} + ' ' + ${ingredient.getDescription()}">Tasty Goodnees 3</td>
 								<td><a href="#" th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredient/' + ${ingredient.getId()} + '/show'}">View</a></td>
 								<td><a href="#" th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredient/' + ${ingredient.getId()} + '/update'}">Update</a></td>
 								<td><a href="#" th:href="@{'/recipe/' + ${recipe.getId()} + '/ingredient/' + ${ingredient.getId()} + '/delete'}">Delete</a></td>

@@ -4,6 +4,7 @@ import com.github.rakhmedovrs.commands.IngredientCommand;
 import com.github.rakhmedovrs.commands.RecipeCommand;
 import com.github.rakhmedovrs.services.IngredientService;
 import com.github.rakhmedovrs.services.RecipeService;
+import com.github.rakhmedovrs.services.UnitOfMeasureService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -23,20 +24,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class IngredientControllerTest
 {
 	@Mock
-	RecipeService recipeService;
-
-	@Mock
 	IngredientService ingredientService;
 
-	private IngredientController ingredientController;
-	private MockMvc mockMvc;
+	@Mock
+	UnitOfMeasureService unitOfMeasureService;
+
+	@Mock
+	RecipeService recipeService;
+
+	IngredientController controller;
+
+	MockMvc mockMvc;
 
 	@Before
-	public void setUp() throws Exception
-	{
+	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		ingredientController = new IngredientController(recipeService, ingredientService);
-		mockMvc = MockMvcBuilders.standaloneSetup(ingredientController).build();
+
+		controller = new IngredientController(ingredientService, recipeService, unitOfMeasureService);
+		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 	}
 
 	@Test

@@ -9,4 +9,6 @@ import com.github.rakhmedovrs.commands.IngredientCommand;
 public interface IngredientService
 {
 	IngredientCommand findByRecipeIdAndIngredientId(Long recipeID, Long ingredientID);
+
+	IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
 }

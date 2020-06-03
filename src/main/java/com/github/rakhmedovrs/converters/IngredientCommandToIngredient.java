@@ -2,6 +2,8 @@ package com.github.rakhmedovrs.converters;
 
 import com.github.rakhmedovrs.commands.IngredientCommand;
 import com.github.rakhmedovrs.domain.Ingredient;
+import com.github.rakhmedovrs.domain.Recipe;
+import lombok.Synchronized;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
 		this.uomConverter = uomConverter;
 	}
 
+	@Synchronized
 	@Nullable
 	@Override
 	public Ingredient convert(IngredientCommand source)
@@ -31,6 +34,12 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
 
 		final Ingredient ingredient = new Ingredient();
 		ingredient.setId(source.getId());
+		if(source.getRecipeID() != null){
+			Recipe recipe = new Recipe();
+			recipe.setId(source.getRecipeID());
+			ingredient.setRecipe(recipe);
+			recipe.addIngredient(ingredient);
+		}
 		ingredient.setAmount(source.getAmount());
 		ingredient.setDescription(source.getDescription());
 		ingredient.setUom(uomConverter.convert(source.getUom()));

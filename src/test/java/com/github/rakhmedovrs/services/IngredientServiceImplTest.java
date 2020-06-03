@@ -1,11 +1,14 @@
 package com.github.rakhmedovrs.services;
 
 import com.github.rakhmedovrs.commands.IngredientCommand;
+import com.github.rakhmedovrs.converters.IngredientCommandToIngredient;
 import com.github.rakhmedovrs.converters.IngredientToIngredientCommand;
+import com.github.rakhmedovrs.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import com.github.rakhmedovrs.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.github.rakhmedovrs.domain.Ingredient;
 import com.github.rakhmedovrs.domain.Recipe;
 import com.github.rakhmedovrs.repositories.RecipeRepository;
+import com.github.rakhmedovrs.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -24,15 +27,20 @@ import static org.mockito.Mockito.*;
 public class IngredientServiceImplTest
 {
 	private final IngredientToIngredientCommand ingredientToIngredientCommand;
+	private final IngredientCommandToIngredient ingredientCommandToIngredient;
 
 	@Mock
 	RecipeRepository recipeRepository;
+
+	@Mock
+	UnitOfMeasureRepository unitOfMeasureRepository;
 
 	private IngredientService ingredientService;
 
 	public IngredientServiceImplTest()
 	{
 		this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+		this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
 	}
 
 	@Before
@@ -40,7 +48,8 @@ public class IngredientServiceImplTest
 	{
 		MockitoAnnotations.initMocks(this);
 
-		ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, recipeRepository);
+		ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
+			recipeRepository, unitOfMeasureRepository);
 	}
 
 	@Test
