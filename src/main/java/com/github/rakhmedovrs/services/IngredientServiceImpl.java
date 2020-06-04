@@ -47,7 +47,8 @@ public class IngredientServiceImpl implements IngredientService
 			.stream()
 			.filter(i -> i.getId().equals(ingredientID))
 			.map(ingredientToIngredientCommand::convert)
-			.findFirst().orElseThrow(() -> new RuntimeException("Cannot find in ingredient with id: " + ingredientID));
+			.findFirst()
+			.orElseThrow(() -> new RuntimeException("Cannot find an ingredient with id: " + ingredientID));
 	}
 
 	@Override
@@ -105,6 +106,39 @@ public class IngredientServiceImpl implements IngredientService
 			}
 
 			return ingredientToIngredientCommand.convert(savedIngredient.get());
+		}
+	}
+
+	@Override
+	public void deleteByRecipeIdAndIngredientId(Long recipeID, Long ingredientID)
+	{
+		log.debug("Deleting ingredient: " + recipeID + ":" + ingredientID);
+
+		Optional<Recipe> recipeOptional = recipeRepository.findById(recipeID);
+
+		if (recipeOptional.isPresent())
+		{
+			Recipe recipe = recipeOptional.get();
+			log.debug("found recipe");
+
+			Optional<Ingredient> ingredientOptional = recipe
+				.getIngredients()
+				.stream()
+				.filter(ingredient -> ingredient.getId().equals(ingredientID))
+				.findFirst();
+
+			if (ingredientOptional.isPresent())
+			{
+				log.debug("found Ingredient");
+				Ingredient ingredientToDelete = ingredientOptional.get();
+				ingredientToDelete.setRecipe(null);
+				recipe.getIngredients().remove(ingredientOptional.get());
+				recipeRepository.save(recipe);
+			}
+		}
+		else
+		{
+			log.debug("Recipe Id Not found. Id:" + recipeID);
 		}
 	}
 }
