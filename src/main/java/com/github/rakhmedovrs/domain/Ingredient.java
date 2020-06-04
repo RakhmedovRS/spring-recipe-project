@@ -9,7 +9,8 @@ import javax.persistence.*;
  * @author RakhmedovRS
  * @created 18-May-20
  */
-@Data
+@Setter
+@Getter
 @EqualsAndHashCode(exclude = "recipe")
 @Entity
 public class Ingredient

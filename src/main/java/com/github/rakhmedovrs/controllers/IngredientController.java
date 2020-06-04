@@ -1,6 +1,7 @@
 package com.github.rakhmedovrs.controllers;
 
 import com.github.rakhmedovrs.commands.IngredientCommand;
+import com.github.rakhmedovrs.commands.UnitOfMeasureCommand;
 import com.github.rakhmedovrs.services.IngredientService;
 import com.github.rakhmedovrs.services.RecipeService;
 import com.github.rakhmedovrs.services.UnitOfMeasureService;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Optional;
 
 /**
  * @author RakhmedovRS
@@ -79,5 +82,24 @@ public class IngredientController
 		log.debug("saved ingredient id: " + savedCommand.getId());
 
 		return "redirect:/recipe/" + savedCommand.getRecipeID() + "/ingredient/" + savedCommand.getId() + "/show";
+	}
+
+	@GetMapping
+	@RequestMapping("recipe/{recipeId}/ingredient/new")
+	public String newRecipe(@PathVariable String recipeId, Model model)
+	{
+		Optional.ofNullable(recipeService.findCommandById(Long.valueOf(recipeId)))
+			.orElseThrow(() -> new RuntimeException("Wrong recipeId: " + recipeId));
+
+		IngredientCommand ingredientCommand = new IngredientCommand();
+		ingredientCommand.setRecipeID(Long.valueOf(recipeId));
+
+		model.addAttribute("ingredient", ingredientCommand);
+
+		ingredientCommand.setUom(new UnitOfMeasureCommand());
+
+		model.addAttribute("uomList", unitOfMeasureService.getAllUoms());
+
+		return "recipe/ingredient/ingredientform";
 	}
 }
