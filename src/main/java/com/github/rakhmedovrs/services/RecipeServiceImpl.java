@@ -1,5 +1,6 @@
 package com.github.rakhmedovrs.services;
 
+import com.github.rakhmedovrs.NotFoundException;
 import com.github.rakhmedovrs.commands.RecipeCommand;
 import com.github.rakhmedovrs.converters.RecipeCommandToRecipe;
 import com.github.rakhmedovrs.converters.RecipeToRecipeCommand;
@@ -32,9 +33,9 @@ public class RecipeServiceImpl implements RecipeService
 	}
 
 	@Override
-	public Recipe findById(Long id)
+	public Recipe findById(Long id) throws NotFoundException
 	{
-		return recipeRepository.findById(id).orElseThrow(() -> new RuntimeException("Recipe not found"));
+		return recipeRepository.findById(id).orElseThrow(() -> new NotFoundException("Recipe not found"));
 	}
 
 	@Override

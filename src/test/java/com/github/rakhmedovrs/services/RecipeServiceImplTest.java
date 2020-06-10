@@ -1,5 +1,6 @@
 package com.github.rakhmedovrs.services;
 
+import com.github.rakhmedovrs.NotFoundException;
 import com.github.rakhmedovrs.commands.RecipeCommand;
 import com.github.rakhmedovrs.converters.RecipeCommandToRecipe;
 import com.github.rakhmedovrs.converters.RecipeToRecipeCommand;
@@ -36,14 +37,14 @@ public class RecipeServiceImplTest
 	private RecipeCommandToRecipe recipeCommandToRecipe;
 
 	@Before
-	public void setUp() throws Exception
+	public void setUp()
 	{
 		MockitoAnnotations.initMocks(this);
 		recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
 	}
 
 	@Test
-	public void findById() throws Exception
+	public void findById()
 	{
 		Recipe recipe = new Recipe();
 		recipe.setId(1L);
@@ -66,7 +67,8 @@ public class RecipeServiceImplTest
 	}
 
 	@Test
-	public void getRecipeCommandByIdTest() throws Exception {
+	public void getRecipeCommandByIdTest()
+	{
 		Recipe recipe = new Recipe();
 		recipe.setId(1L);
 		Optional<Recipe> recipeOptional = Optional.of(recipe);
@@ -86,9 +88,16 @@ public class RecipeServiceImplTest
 	}
 
 	@Test
-	public void testDeleteById() throws Exception
+	public void testDeleteById()
 	{
 		recipeService.deleteById(1L);
 		verify(recipeRepository, times(1)).deleteById(anyLong());
+	}
+
+	@Test(expected = NotFoundException.class)
+	public void getRecipeByIdNotFoundTest()
+	{
+		when(recipeRepository.findById(anyLong())).thenReturn(Optional.empty());
+		recipeService.findById(1L);
 	}
 }
