@@ -37,7 +37,7 @@ public class RecipeCommand
 	private Integer cookTime;
 
 	@Min(1)
-	@Max(999)
+	@Max(100)
 	private Integer servings;
 	private String source;
 
