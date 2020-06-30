@@ -6,6 +6,7 @@ import com.github.rakhmedovrs.repositories.RecipeRepository;
 import com.github.rakhmedovrs.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,7 @@ import javax.transaction.Transactional;
  */
 @Slf4j
 @Component
+@Profile("default")
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent>
 {
 	private final CategoryRepository categoryRepository;
