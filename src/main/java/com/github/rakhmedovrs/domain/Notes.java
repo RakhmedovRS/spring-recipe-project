@@ -8,18 +8,11 @@ import javax.persistence.*;
  * @author RakhmedovRS
  * @created 18-May-20
  */
-@Data
-@EqualsAndHashCode(exclude = "recipe")
-@Entity
-public class Notes
-{
+@Getter
+@Setter
+public class Notes {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@OneToOne
-	private Recipe recipe;
-
-	@Lob
+	private String id;
 	private String recipeNotes;
 }

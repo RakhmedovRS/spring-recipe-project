@@ -8,11 +8,11 @@ import lombok.Setter;
  * @author RakhmedovRS
  * @created 31-May-20
  */
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 public class CategoryCommand
 {
-	private Long id;
+	private String id;
 	private String description;
 }

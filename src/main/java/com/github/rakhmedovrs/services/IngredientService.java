@@ -1,6 +1,7 @@
 package com.github.rakhmedovrs.services;
 
 import com.github.rakhmedovrs.commands.IngredientCommand;
+import reactor.core.publisher.Mono;
 
 /**
  * @author RakhmedovRS
@@ -8,9 +9,9 @@ import com.github.rakhmedovrs.commands.IngredientCommand;
  */
 public interface IngredientService
 {
-	IngredientCommand findByRecipeIdAndIngredientId(Long recipeID, Long ingredientID);
+	Mono<IngredientCommand> findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
 
-	IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
+	Mono<IngredientCommand> saveIngredientCommand(IngredientCommand command);
 
-	void deleteByRecipeIdAndIngredientId(Long recipeID, Long ingredientID);
+	Mono<Void> deleteById(String recipeId, String idToDelete);
 }

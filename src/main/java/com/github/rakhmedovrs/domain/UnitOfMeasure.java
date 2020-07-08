@@ -1,6 +1,7 @@
 package com.github.rakhmedovrs.domain;
 
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.*;
 
@@ -8,12 +9,12 @@ import javax.persistence.*;
  * @author RakhmedovRS
  * @created 18-May-20
  */
-@Data
-@Entity
-public class UnitOfMeasure
-{
+@Getter
+@Setter
+@Document
+public class UnitOfMeasure {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private String id;
 	private String description;
 }

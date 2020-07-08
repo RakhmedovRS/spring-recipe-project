@@ -1,6 +1,6 @@
 package com.github.rakhmedovrs.repositories.reactive;
 
-import com.github.rakhmedovrs.domain.UnitOfMeasure;
+import com.github.rakhmedovrs.domain.Category;
 import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 import reactor.core.publisher.Mono;
 
@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
  * @author RakhmedovRS
  * @created 07-Jul-20
  */
-public interface UnitOfMeasureReactiveRepository extends ReactiveMongoRepository<UnitOfMeasure, String>
+public interface CategoryReactiveRepository extends ReactiveMongoRepository<Category, String>
 {
-	Mono<UnitOfMeasure> findByDescription(String description);
+	Mono<Category> findByDescription(String description);
 }

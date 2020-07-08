@@ -9,10 +9,11 @@ import static org.junit.Assert.*;
 
 public class UnitOfMeasureCommandToUnitOfMeasureTest
 {
-	private static final String DESCRIPTION = "description";
-	private static final Long LONG_VALUE = 1L;
 
-	private UnitOfMeasureCommandToUnitOfMeasure converter;
+	public static final String DESCRIPTION = "description";
+	public static final String LONG_VALUE = "1";
+
+	UnitOfMeasureCommandToUnitOfMeasure converter;
 
 	@Before
 	public void setUp() throws Exception
@@ -21,7 +22,7 @@ public class UnitOfMeasureCommandToUnitOfMeasureTest
 	}
 
 	@Test
-	public void testNullParameter() throws Exception
+	public void testNullParamter() throws Exception
 	{
 		assertNull(converter.convert(null));
 	}

@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  */
 public class CategoryTest
 {
-	private Category category;
+	Category category;
 
 	@Before
 	public void setUp()
@@ -20,20 +20,22 @@ public class CategoryTest
 	}
 
 	@Test
-	public void getId()
+	public void getId() throws Exception
 	{
-		Long id = 4L;
-		category.setId(id);
-		assertEquals(id, category.getId());
+		String idValue = "4";
+
+		category.setId(idValue);
+
+		assertEquals(idValue, category.getId());
 	}
 
 	@Test
-	public void getDescription()
+	public void getDescription() throws Exception
 	{
 	}
 
 	@Test
-	public void getRecipes()
+	public void getRecipes() throws Exception
 	{
 	}
 }

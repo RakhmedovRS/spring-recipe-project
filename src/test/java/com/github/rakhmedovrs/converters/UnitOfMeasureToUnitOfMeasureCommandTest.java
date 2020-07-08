@@ -12,10 +12,11 @@ import static org.junit.Assert.*;
  */
 public class UnitOfMeasureToUnitOfMeasureCommandTest
 {
-	private static final String DESCRIPTION = "description";
-	private static final Long LONG_VALUE = 1L;
 
-	private UnitOfMeasureToUnitOfMeasureCommand converter;
+	public static final String DESCRIPTION = "description";
+	public static final String LONG_VALUE = "1";
+
+	UnitOfMeasureToUnitOfMeasureCommand converter;
 
 	@Before
 	public void setUp() throws Exception

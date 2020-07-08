@@ -2,6 +2,8 @@ package com.github.rakhmedovrs.services;
 
 import com.github.rakhmedovrs.commands.RecipeCommand;
 import com.github.rakhmedovrs.domain.Recipe;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Set;
 
@@ -11,13 +13,13 @@ import java.util.Set;
  */
 public interface RecipeService
 {
-	Recipe findById(Long id);
+	Flux<Recipe> getRecipes();
 
-	void deleteById(Long id);
+	Mono<Recipe> findById(String id);
 
-	Set<Recipe> getRecipes();
+	Mono<RecipeCommand> findCommandById(String id);
 
-	RecipeCommand findCommandById(Long id);
+	Mono<RecipeCommand> saveRecipeCommand(RecipeCommand command);
 
-	RecipeCommand saveRecipeCommand(RecipeCommand recipeCommand);
+	Mono<Void> deleteById(String idToDelete);
 }
